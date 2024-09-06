@@ -9,6 +9,4 @@ public class SteppinApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(SteppinApplication.class, args);
 	}
-
-
 }

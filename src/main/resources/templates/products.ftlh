@@ -10,14 +10,25 @@
     <input type="hidden" name="_csrf" value="${_csrf.token}">
     <input type="submit" value="Выйти"/>
 </form>
-<form action="/" method="get">
-Поиск по названию модели: <input type="text" name = "title"><br>
+<form action="/products" method="get">
+    Поиск по названию модели: <input type="text" name="title"><br>
     <input type="submit" value="поиск">
 </form>
 <#list products as product>
     <div>
-        <p><b>${product.title}</b> ${product.price} руб | <a href="/product/${product.id}">Подробнее...</a></p>
+        <p><b>${product.title}</b> ${product.price} руб | <a href="/product/${product.id}">Подробнее...</a> |
+        <form action="/addToCart" method="post">
+            <input type="hidden" name="_csrf" value="${_csrf.token}">
+            <input type="hidden" name="id" value="${product.id}">
+            <input type="submit" value="Добавить в корзину">
+        </form>
     </div>
-    <#else>
+
+    <div>
+        <form action="user_cart.ftlh" method="get"></form>
+    </div>
+<#else>
     <h3>Товаров нет</h3>
 </#list>
+</body>
+</html>

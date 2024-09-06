@@ -1,12 +1,17 @@
 package com.example.Steppin.controllers;
 
+import com.example.Steppin.models.Cart;
+import com.example.Steppin.models.Product;
+import com.example.Steppin.repositories.CartRepository;
+import com.example.Steppin.repositories.UserRepository;
+import com.example.Steppin.services.CartService;
+import com.example.Steppin.services.ProductService;
 import org.springframework.ui.Model;
 import com.example.Steppin.models.User;
 import com.example.Steppin.services.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequiredArgsConstructor
@@ -18,10 +23,12 @@ public class UserController {
         return "login";
     }
 
+
     @GetMapping("/registration")
     public String registration() {
         return "registration";
     }
+
 
     @PostMapping("/registration")
     public String createUser(User user, Model model) {
@@ -35,12 +42,6 @@ public class UserController {
     @GetMapping("/")
     public String welcome() {
         return "welcome";
-    }
-
-
-    @GetMapping("/hello")
-    public String securityUrl() {
-        return "hello";
     }
 
 }

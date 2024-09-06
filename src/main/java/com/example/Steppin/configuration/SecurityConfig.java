@@ -1,6 +1,6 @@
 package com.example.Steppin.configuration;
 
-import com.example.Steppin.models.enums.Role;
+
 import com.example.Steppin.services.CustomUserDetailsService;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -18,19 +18,18 @@ import org.springframework.security.web.DefaultSecurityFilterChain;
 import java.io.IOException;
 
 @Configuration
-@EnableWebSecurity
+
 @AllArgsConstructor
 public class SecurityConfig {
 
     private final CustomUserDetailsService customUserDetailsService;
-
     @Bean
     protected DefaultSecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests((requests) -> requests
-                        .requestMatchers("/", "/registration", "/login").permitAll()
-                        .requestMatchers("/products/**", "/image/**").authenticated()
-                        .requestMatchers("/admin").hasRole("ADMIN")
+                        .requestMatchers("/", "/registration", "/login", "/css/**").permitAll()
+                        .requestMatchers("/products/**", "/image/**", "/addToCart").authenticated()
+                        .requestMatchers("/admin/**").hasAuthority("ROLE_ADMIN")
                         .anyRequest().authenticated()
                 )
                 .formLogin((form) -> form
@@ -42,21 +41,12 @@ public class SecurityConfig {
         return http.build();
     }
 
-   /* protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+   protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(customUserDetailsService)
                 .passwordEncoder(passwordEncoder());
     }
-    */
 
-    @Bean
-    public InMemoryUserDetailsManager userDetailsService() {
-        UserDetails user = User.builder()
-                .username("admin@mail.ru")
-                .password("admin")
-                .roles("ADMIN")
-                .build();
-                return new InMemoryUserDetailsManager(user);
-    }
+
 
     @Bean
     PasswordEncoder passwordEncoder() {
